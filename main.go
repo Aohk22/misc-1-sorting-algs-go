@@ -111,10 +111,3 @@ func QuickSort[T string | int](slice []T, reverse bool) ([]T) {
 	result = append(result, sortedRight...)
 	return result
 }
-
-func main() {
-	var a []int = []int{1, 4, 2, 6, 3, 9, 20, 7}
-	fmt.Printf("Before: %v\n", a)
-	a = MergeSort(a, false)
-	fmt.Printf("After : %v\n", a)
-}
