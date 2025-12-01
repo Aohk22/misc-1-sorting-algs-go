@@ -70,7 +70,15 @@ func MergeSort[T string | int](slice []T, reverse bool) ([]T) {
 }
 
 func QuickSort[T string | int](slice []T, reverse bool) ([]T) {
+	// stop recurse
 	if len(slice) < 2 {
+		return slice
+	} else if len(slice) == 2 { // edge case
+		if slice[0] > slice[1] {
+			t := slice[0]
+			slice[0] = slice[1]
+			slice[1] = t
+		}
 		return slice
 	}
 	indexForLarger := 0
@@ -78,14 +86,6 @@ func QuickSort[T string | int](slice []T, reverse bool) ([]T) {
 	indexForSmaller := indexPivot - 1
 	pivotValue := slice[indexPivot]
 
-	if indexForLarger == indexForSmaller {
-		if slice[indexForLarger] > slice[indexPivot] {
-			t := slice[indexForLarger]
-			slice[indexForLarger] = slice[indexPivot]
-			slice[indexPivot] = t
-		}
-		return slice
-	}
 	for indexForLarger < indexForSmaller {
 		if slice[indexForLarger] > slice[indexPivot] {
 			for indexForLarger < indexForSmaller {
@@ -101,9 +101,10 @@ func QuickSort[T string | int](slice []T, reverse bool) ([]T) {
 		}
 		indexForLarger += 1
 	}
-	// array is now shorted around pivot, now sort it recursively with another pivot.
+	// slice is now shorted around pivot, now sort it recursively with another pivot.
 	sortedLeft := QuickSort(slice[:indexForSmaller], false)
 	sortedRight := QuickSort(slice[indexForSmaller:indexPivot], false)
+	// make slice
 	result := make([]T, 0, len(slice))
 	result = append(result, sortedLeft...)
 	result = append(result, pivotValue)
